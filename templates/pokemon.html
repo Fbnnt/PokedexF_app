@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>{{ titulo or 'Pokédex' }}</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+   <header class="site-header">
+      <h1>Pokédex</h1>
+      <nav>
+         <a href="{{ url_for('route_first_ten') }}">Todos</a>
+         <a href="{{ url_for('route_first_five') }}">Primeros 5</a>
+      </nav>
+   </header>
+
+   <main>
+      <h2 class="page-title">{{ titulo }}</h2>
+      <section class="cards">
+         {% for p in pokemones %}
+         <article class="card">
+            <div class="card-image">
+               <img src="{{ p.imagen }}" alt="{{ p.nombre }}">
+            </div>
+            <div class="card-body">
+               <h3 class="card-title">#{{ p.id }} - {{ p.nombre }}</h3>
+               <ul class="card-list">
+                  <li><strong>Tipo:</strong> {{ p.tipo | join(', ') if p.tipo is iterable else p.tipo }}</li>
+                  <li><strong>Poder:</strong> {{ p.poder }}</li>
+                  <li><strong>Altura:</strong> {{ p.altura }}</li>
+                  <li><strong>Peso:</strong> {{ p.peso }}</li>
+               </ul>
+            </div>
+         </article>
+         {% endfor %}
+      </section>
+   </main>
+
+   <footer class="site-footer">
+      <p>Hecho con Flask · Datos de ejemplo</p>
+   </footer>
+   
+</body>
+</html>
+
+
